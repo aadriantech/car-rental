@@ -1,5 +1,4 @@
 import StatePromiseInterface from '@/interfaces/StatePromiseInterface';
-import {Store} from 'vuex';
 
 export default class AvailabilityStatePromiseAdapter implements StatePromiseInterface {
   public productList: any[];

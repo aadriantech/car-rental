@@ -23,7 +23,7 @@ class AvailabilityRepository {
    * @returns {Promise<AxiosResponse<T>>}
    */
   public async getAvailability(
-    state: any,
+    state: Store<any>,
     startTime: string,
     endTime: string,
     limit = 20,

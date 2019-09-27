@@ -1,19 +1,15 @@
 import Repository from '../repositories/Repository';
 import ApiResourceInterface from '@/interfaces/ApiResourceInterface';
+import AvailabilityParamsInterface from '@/interfaces/AvailabilityParamsInterface';
+import AvailabilityDataInterface from '@/interfaces/AvailabilityDataInterface';
 import ResourceParameterInterface from '@/interfaces/ResourceParameterInterface';
-
-interface Params {
-  startTime?: string;
-  endTime?: string;
-  limit?: number;
-  page?: number;
-}
+import {Store} from 'vuex';
 
 export default class AvailabilityApiResource implements ApiResourceInterface {
-  public params: Params;
-  public products: object;
+  public params: AvailabilityParamsInterface;
+  public resource: AvailabilityDataInterface;
   public resourcePathName: string;
-  public store: object;
+  public store: any;
 
   constructor() {
     this.params = {
@@ -22,7 +18,7 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
       limit: 20,
       page: 1,
     };
-    this.products = {};
+    this.resource = {};
     this.resourcePathName = '';
     this.store = {};
   }
@@ -57,18 +53,18 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
    * @param store object vuex state object
    * @returns {AvailabilityApiResource}
    */
-  public setState(store) {
+  public setState(store: Store<any>): AvailabilityApiResource {
     this.store = store;
 
     return this;
   }
 
   /**
-   * Retrieves products from the API Endpoint
+   * Retrieves resource from the API Endpoint
    *
    * @returns {Promise<*>}
    */
-  public async get() {
+  public async get(): Promise<any> {
     const {
       startTime,
       endTime,
@@ -76,7 +72,7 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
       page,
     } = this.params;
 
-    this.products = await Repository.post(`${this.resourcePathName}/buy_products`,
+    this.resource = await Repository.post(`${this.resourcePathName}/buy_resource`,
       {
         startTime,
         endTime,
@@ -84,19 +80,24 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
         page,
       });
 
-    // save the products in the state
+    // save the resource in the state
     this.storeResolve();
 
-    return this.products;
+    return this.resource;
   }
 
   /**
-   * Stores the array data from promise to vuex state object
+   * Stores the array resource from promise to vuex state object
    *
    * @return void
    */
-  public storeResolve() {
-    const {data} = this.products;
-    this.store.commit('setProducts', data.output);
+  public storeResolve(): void {
+    const {data} = this.resource;
+    this.store.commit('setAvailability',
+      {
+        params: this.params,
+        data,
+      },
+    );
   }
 }

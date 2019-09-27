@@ -1,9 +1,10 @@
 import ResourceParameterInterface from '@/interfaces/ResourceParameterInterface';
 import AvailabilityApiResource from '@/api/AvailabilityApiResource';
+import {Store} from 'vuex';
 
 interface ApiResourceInterface {
   params: object;
-  products: object;
+  resource: object;
   resourcePathName: string;
   store: object;
 
@@ -29,21 +30,21 @@ interface ApiResourceInterface {
    * @param store object vuex state object
    * @returns {AvailabilityApiResource}
    */
-  setState(store);
+  setState(store: Store<any>): AvailabilityApiResource;
 
   /**
    * Retrieves products from the API Endpoint
    *
    * @returns {Promise<*>}
    */
-  get();
+  get(): Promise<any>;
 
   /**
    * Stores the array data from promise to vuex state object
    *
    * @return void
    */
-  storeResolve();
+  storeResolve(): void;
 }
 
 export default ApiResourceInterface;

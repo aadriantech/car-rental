@@ -2,6 +2,7 @@ import AvailabilityResourceInterface from '@/interfaces/AvailabilityResourceInte
 import {Store} from 'vuex';
 import StatePromiseInterface from '@/interfaces/StatePromiseInterface';
 import ApiResourceInterface from '@/interfaces/ApiResourceInterface';
+import ResourceParameterInterface from '@/interfaces/ResourceParameterInterface';
 
 export default class ResourceFactory implements AvailabilityResourceInterface {
   public get: object;
@@ -16,7 +17,7 @@ export default class ResourceFactory implements AvailabilityResourceInterface {
    * @param store object vuex state object
    * @param params object api parameters
    */
-  constructor(store: any, params: object) {
+  constructor(store: Store<any>, params: object) {
     this.get = {};
     this.params = params;
     this.promise = {};
@@ -49,7 +50,7 @@ export default class ResourceFactory implements AvailabilityResourceInterface {
    * @param apiParams object required parameters of an API resource
    * @returns {ResourceFactory}
    */
-  public hasApi(resource: ApiResourceInterface, resourcePathName: string, apiParams: object) {
+  public hasApi(resource: ApiResourceInterface, resourcePathName: string, apiParams: ResourceParameterInterface) {
     this.promise = resource
       .setParams(apiParams)
       .setResourcePath(resourcePathName)
