@@ -2,7 +2,7 @@ import ResourceParameterInterface from '@/interfaces/ResourceParameterInterface'
 import AvailabilityApiResource from '@/api/AvailabilityApiResource';
 
 interface ApiResourceInterface {
-  productParams: object;
+  params: object;
   products: object;
   resourcePathName: string;
   store: object;

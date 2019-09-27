@@ -2,14 +2,21 @@ import Repository from '../repositories/Repository';
 import ApiResourceInterface from '@/interfaces/ApiResourceInterface';
 import ResourceParameterInterface from '@/interfaces/ResourceParameterInterface';
 
+interface Params {
+  startTime?: string;
+  endTime?: string;
+  limit?: number;
+  page?: number;
+}
+
 export default class AvailabilityApiResource implements ApiResourceInterface {
-  public productParams: object;
+  public params: Params;
   public products: object;
   public resourcePathName: string;
   public store: object;
 
   constructor() {
-    this.productParams = {
+    this.params = {
       startTime: '',
       endTime: '',
       limit: 20,
@@ -27,7 +34,7 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
    * @return AvailabilityApiResource
    */
   public setParams(params: ResourceParameterInterface): AvailabilityApiResource {
-    this.productParams = params.resource;
+    this.params = params.resource;
 
     return this;
   }
@@ -67,7 +74,7 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
       endTime,
       limit,
       page,
-    } = this.productParams;
+    } = this.params;
 
     this.products = await Repository.post(`${this.resourcePathName}/buy_products`,
       {
