@@ -68,17 +68,16 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
     const {
       startTime,
       endTime,
-      limit,
-      page,
     } = this.params;
 
-    this.resource = await Repository.post(`${this.resourcePathName}/buy_resource`,
+    this.resource = await Repository.get(`${this.resourcePathName}`,
       {
-        startTime,
-        endTime,
-        limit,
-        page,
-      });
+        params: {
+          startTime,
+          endTime,
+        },
+      },
+    );
 
     // save the resource in the state
     this.storeResolve();

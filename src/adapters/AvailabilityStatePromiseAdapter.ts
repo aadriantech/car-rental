@@ -1,34 +1,36 @@
 import StatePromiseInterface from '@/interfaces/StatePromiseInterface';
+import {Store} from 'vuex';
 
 export default class AvailabilityStatePromiseAdapter implements StatePromiseInterface {
-  public productList: any[];
+  public resourceData: any[];
 
   constructor() {
-    this.productList = [];
+    this.resourceData = [];
   }
 
   /**
-   * Assigns products from state to property
+   * Assigns data from state to property
    *
-   * @param productList object products object from state
+   * @param resourceData object data object from state
    */
-  public setState(productList: any) {
-    this.productList = productList;
+  public setState(resourceData: Store<any>) {
+
+    console.log(resourceData.state.availability.value);
+    debugger;
+    this.resourceData = resourceData.state.availability.value;
 
     return this;
   }
 
   public async transform() {
     return new Promise((resolve, reject) => {
-      if (this.productList.length >= 1) {
-        const products = {
-          data: {
-            output: this.productList,
-          },
+      if (this.resourceData.length >= 1) {
+        const data = {
+          data: this.resourceData,
         };
-        resolve(products);
+        resolve(data);
       } else {
-        const why = 'There is no product list stored in state.';
+        const why = 'There is no data list stored in state.';
         reject(why);
       }
     });

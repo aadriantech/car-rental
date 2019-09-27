@@ -72,7 +72,7 @@
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
-  import Repository from '@/repositories/Repository';
+  import RepositoryFactory from '@/factories/RepositoryFactory';
 
   interface Time {
     openTime(type: string): void;
@@ -96,8 +96,12 @@
       (v: any) => !!v || 'Time is required',
     ];
 
-    public callAvailabilityApi() {
-      Repository.get('availability');
+    public async callAvailabilityApi() {
+      const availabilityRepository = RepositoryFactory.get('availability');
+      const output = await availabilityRepository.get(this.$store, this.startTime, this.endTime);
+      const {data} = output;
+      console.log(data.data);
+      debugger;
     }
 
     public checkValuesExist(show: boolean) {

@@ -1,9 +1,19 @@
 import ResourceFactory from '../factories/ResourceFactory';
 import ProductStatePromiseAdapter from '../adapters/AvailabilityStatePromiseAdapter';
 import AvailabilityApiResource from '../api/AvailabilityApiResource';
+import DateTimeHelper from '@/helpers/DateTimeHelper';
 import {Store} from 'vuex';
 
-class AvailabilityRepository {
+interface AvailabilityRepositoryInterface {
+  resourcePathName: string;
+
+  get(state: Store<any>,
+      startTime: string,
+      endTime: string,
+  ): Promise<any>;
+}
+
+class AvailabilityRepository implements AvailabilityRepositoryInterface {
 
   public resourcePathName: string;
 
@@ -17,24 +27,32 @@ class AvailabilityRepository {
    * @param state object vuex state object
    * @param startTime string
    * @param endTime string
-   * @param limit number
-   * @param page number
    *
    * @returns {Promise<AxiosResponse<T>>}
    */
-  public async getAvailability(
+  public async get(
     state: Store<any>,
     startTime: string,
     endTime: string,
-    limit = 20,
-    page = 1,
-  ) {
+  ): Promise<any> {
+
+    const dateTimeHelper = new DateTimeHelper();
+    const startTimeKey = dateTimeHelper
+      .getToday()
+      .convertTimeToday(startTime)
+      .dateTimeToUnix()
+      .unixTimeStamp;
+
+    const endTimeKey = dateTimeHelper
+      .getToday()
+      .convertTimeToday(endTime)
+      .dateTimeToUnix()
+      .unixTimeStamp;
+
     const params = {
       resource: {
-        startTime,
-        endTime,
-        limit,
-        page,
+        startTime: startTimeKey,
+        endTime: endTimeKey,
       },
     };
 
@@ -48,7 +66,7 @@ class AvailabilityRepository {
     resource
       .hasState(
         productStatePromiseAdapter,
-        'productList',
+        startTimeKey + '-' + endTimeKey,
       )
       .hasApi(
         availabilityApiResource,

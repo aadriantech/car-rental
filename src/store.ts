@@ -5,10 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    availability: {
-      key: '',
-      value: {},
-    },
+    availability: {},
   },
   /** ===========================================
    * Mutation methods
@@ -23,10 +20,10 @@ export default new Vuex.Store({
      * @param availability array array of products
      */
     setAvailability(state, availability) {
-      // start and end time as key
-      // @TODO: Adrian double check the value of the key
-      state.availability.key = availability.params.startTime + availability.params.endTime;
-      state.availability.value = availability.data;
+      // start and end time as key (unix timestamp format)
+      const key = availability.params.startTime + '-' + availability.params.endTime;
+      // @ts-ignore
+      state.availability[key] = availability.data;
     },
   },
   /** ===========================================
