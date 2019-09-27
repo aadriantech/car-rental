@@ -1,13 +1,19 @@
 import ResourceParameterInterface from '@/interfaces/ResourceParameterInterface';
+import AvailabilityApiResource from '@/api/AvailabilityApiResource';
 
 interface ApiResourceInterface {
+  productParams: object;
+  products: object;
+  resourcePathName: string;
+  store: object;
+
   /**
    * Assigns parameter values to property
    *
    * @param params object required parameters of the API endpoint
    * @returns {AvailabilityApiResource}
    */
-  setParams(params: ResourceParameterInterface): ApiResourceInterface;
+  setParams(params: ResourceParameterInterface): AvailabilityApiResource;
 
   /**
    * Assigns the resource url of API endpoint to property

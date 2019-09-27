@@ -3,13 +3,18 @@ import ApiResourceInterface from '@/interfaces/ApiResourceInterface';
 import ResourceParameterInterface from '@/interfaces/ResourceParameterInterface';
 
 export default class AvailabilityApiResource implements ApiResourceInterface {
-  public productParams?: object;
+  public productParams: object;
   public products: object;
   public resourcePathName: string;
   public store: object;
 
   constructor() {
-    this.productParams = {};
+    this.productParams = {
+      startTime: '',
+      endTime: '',
+      limit: 20,
+      page: 1,
+    };
     this.products = {};
     this.resourcePathName = '';
     this.store = {};
@@ -21,7 +26,7 @@ export default class AvailabilityApiResource implements ApiResourceInterface {
    *
    * @return AvailabilityApiResource
    */
-  public setParams(params: ResourceParameterInterface) {
+  public setParams(params: ResourceParameterInterface): AvailabilityApiResource {
     this.productParams = params.resource;
 
     return this;

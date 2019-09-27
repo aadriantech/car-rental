@@ -1,9 +1,11 @@
 interface ResourceParameterInterface {
-  resource?: object;
-  startTime?: string;
-  endTime?: string;
-  limit?: number;
-  page?: number;
+  // productParams: {
+  //   startTime?: string,
+  //   endTime?: string,
+  //   limit?: number,
+  //   page?: number,
+  // };
+  resource: object;
 }
 
 export default ResourceParameterInterface;
