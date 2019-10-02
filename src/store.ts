@@ -23,7 +23,7 @@ export default new Vuex.Store({
       // start and end time as key (unix timestamp format)
       const key = availability.params.startTime + '-' + availability.params.endTime;
       // @ts-ignore
-      state.availability[key] = availability.data;
+      state.availability[key] = availability.data.data;
     },
   },
   /** ===========================================

@@ -35,9 +35,11 @@ export default class ResourceFactory implements AvailabilityResourceInterface {
    * @returns {ResourceFactory}
    */
   public hasState(adapter: StatePromiseInterface, stateKey: string) {
-    this.promise = adapter
-      .setState(this.state.availability.[stateKey])
-      .transform();
+    if (this.state.availability[stateKey]) {
+      this.promise = adapter
+        .setState(this.state.availability[stateKey])
+        .transform();
+    }
 
     return this;
   }

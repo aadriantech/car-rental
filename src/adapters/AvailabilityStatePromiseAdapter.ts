@@ -13,18 +13,15 @@ export default class AvailabilityStatePromiseAdapter implements StatePromiseInte
    *
    * @param resourceData object data object from state
    */
-  public setState(resourceData: Store<any>) {
-
-    console.log(resourceData.state.availability.value);
-    debugger;
-    this.resourceData = resourceData.state.availability.value;
+  public setState(resourceData: [any]) {
+    this.resourceData = resourceData;
 
     return this;
   }
 
   public async transform() {
     return new Promise((resolve, reject) => {
-      if (this.resourceData.length >= 1) {
+      if (this.resourceData.length > 0) {
         const data = {
           data: this.resourceData,
         };

@@ -67,52 +67,80 @@
         </v-btn>
       </v-col>
     </v-row><!-- END:: Time Picker -->
+
+<!--    <v-row v-if="showMaps">-->
+<!--      <google-maps v-bind:availabilityData="availabilityData"></google-maps>-->
+<!--    </v-row>-->
   </div>
 </template>
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
   import RepositoryFactory from '@/factories/RepositoryFactory';
-
-  interface Time {
-    openTime(type: string): void;
-
-    setValue(): void;
-  }
+  import TimeInterface from '@/interfaces/TimeInterface';
+  import GoogleMaps from '@/components/GoogleMaps.vue';
 
   @Component({
-    components: {},
+    components: {
+      GoogleMaps,
+    },
   })
 
-  export default class Home extends Vue implements Time {
+  export default class Home extends Vue implements TimeInterface {
 
+    public availabilityData: [] = [];
     public picker: string = '';
     public showTimePicker: boolean = false;
     public startTime: string = '';
     public endTime: string = '';
+    public showMaps: boolean = true;
     public showSubmit: boolean = false;
     public type: string = '';
     public timeRules: [any] = [
       (v: any) => !!v || 'Time is required',
     ];
 
+    /**
+     * Get the availability data from API endpoint
+     *
+     * @return void
+     */
     public async callAvailabilityApi() {
       const availabilityRepository = RepositoryFactory.get('availability');
-      const output = await availabilityRepository.get(this.$store, this.startTime, this.endTime);
-      const {data} = output;
-      console.log(data.data);
-      debugger;
+      const {data} = await availabilityRepository.get(this.$store, this.startTime, this.endTime);
+      this.availabilityData = data.data;
+      if (this.availabilityData.length > 0) {
+        console.log(this.availabilityData);
+        this.showMaps = true;
+      }
     }
 
+    /**
+     * Shows the submit button if time values exist
+     *
+     * @param show boolean
+     * @return void
+     */
     public checkValuesExist(show: boolean) {
       this.showSubmit = show;
     }
 
+    /**
+     * Displays the time picker on click of text field start or end
+     *
+     * @param type
+     * @return void
+     */
     public openTime(type: string) {
       this.showTimePicker = true;
       this.type = type;
     }
 
+    /**
+     * Stores the time values in a variable from the time picker
+     *
+     * @return void
+     */
     public setValue() {
       if (this.type === 'start') {
         this.startTime = this.picker;
@@ -127,3 +155,4 @@
     }
   }
 </script>
+

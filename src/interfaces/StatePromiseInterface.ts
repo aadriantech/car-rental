@@ -1,7 +1,7 @@
 import AvailabilityStatePromiseAdapter from '@/adapters/AvailabilityStatePromiseAdapter';
 
 interface StatePromiseInterface {
-  setState(resourceData: any): AvailabilityStatePromiseAdapter;
+  setState(resourceData: [any]): AvailabilityStatePromiseAdapter;
   transform(): Promise<any>;
 }
 
