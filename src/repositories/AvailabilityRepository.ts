@@ -1,5 +1,5 @@
 import ResourceFactory from '../factories/ResourceFactory';
-import ProductStatePromiseAdapter from '../adapters/AvailabilityStatePromiseAdapter';
+import AvailabilityStatePromiseAdapter from '../adapters/AvailabilityStatePromiseAdapter';
 import AvailabilityApiResource from '../api/AvailabilityApiResource';
 import DateTimeHelper from '@/helpers/DateTimeHelper';
 import {Store} from 'vuex';
@@ -24,14 +24,14 @@ class AvailabilityRepository implements AvailabilityRepositoryInterface {
   /**
    * Retrieves the list of car availabilities from API Endpoint
    *
-   * @param state object vuex state object
+   * @param store object vuex store object
    * @param startTime string
    * @param endTime string
    *
    * @returns {Promise<AxiosResponse<T>>}
    */
   public async get(
-    state: Store<any>,
+    store: Store<any>,
     startTime: string,
     endTime: string,
   ): Promise<any> {
@@ -57,16 +57,16 @@ class AvailabilityRepository implements AvailabilityRepositoryInterface {
     };
 
     const resource = new ResourceFactory(
-      state,
+      store,
       params,
     );
 
     const availabilityApiResource = new AvailabilityApiResource();
-    const productStatePromiseAdapter = new ProductStatePromiseAdapter();
+    const productStatePromiseAdapter = new AvailabilityStatePromiseAdapter();
     resource
+      .setState(store.state.availability[startTimeKey + '-' + endTimeKey])
       .hasState(
         productStatePromiseAdapter,
-        startTimeKey + '-' + endTimeKey,
       )
       .hasApi(
         availabilityApiResource,

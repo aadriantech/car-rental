@@ -68,9 +68,10 @@
       </v-col>
     </v-row><!-- END:: Time Picker -->
 
-<!--    <v-row v-if="showMaps">-->
-<!--      <google-maps v-bind:availabilityData="availabilityData"></google-maps>-->
-<!--    </v-row>-->
+    <!-- START::Google Maps -->
+    <v-row v-if="showMaps">
+      <google-maps v-bind:availabilityData="availabilityData"></google-maps>
+    </v-row><!-- END::Google Maps -->
   </div>
 </template>
 
@@ -93,7 +94,7 @@
     public showTimePicker: boolean = false;
     public startTime: string = '';
     public endTime: string = '';
-    public showMaps: boolean = true;
+    public showMaps: boolean = false;
     public showSubmit: boolean = false;
     public type: string = '';
     public timeRules: [any] = [
@@ -109,8 +110,9 @@
       const availabilityRepository = RepositoryFactory.get('availability');
       const {data} = await availabilityRepository.get(this.$store, this.startTime, this.endTime);
       this.availabilityData = data.data;
-      if (this.availabilityData.length > 0) {
-        console.log(this.availabilityData);
+
+      // show the google maps if there is availability
+      if (this.availabilityData) {
         this.showMaps = true;
       }
     }

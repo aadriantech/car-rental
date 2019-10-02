@@ -1,19 +1,15 @@
 import StatePromiseInterface from '@/interfaces/StatePromiseInterface';
 import {Store} from 'vuex';
 
-export default class AvailabilityStatePromiseAdapter implements StatePromiseInterface {
-  public resourceData: any[];
-
-  constructor() {
-    this.resourceData = [];
-  }
+class AvailabilityStatePromiseAdapter implements StatePromiseInterface {
+  public resourceData?: Store<any>;
 
   /**
    * Assigns data from state to property
    *
    * @param resourceData object data object from state
    */
-  public setState(resourceData: [any]) {
+  public setState(resourceData: Store<any>) {
     this.resourceData = resourceData;
 
     return this;
@@ -21,9 +17,11 @@ export default class AvailabilityStatePromiseAdapter implements StatePromiseInte
 
   public async transform() {
     return new Promise((resolve, reject) => {
-      if (this.resourceData.length > 0) {
+      if (this.resourceData) {
         const data = {
-          data: this.resourceData,
+          data: {
+            data: this.resourceData,
+          },
         };
         resolve(data);
       } else {
@@ -33,3 +31,5 @@ export default class AvailabilityStatePromiseAdapter implements StatePromiseInte
     });
   }
 }
+
+export default AvailabilityStatePromiseAdapter;

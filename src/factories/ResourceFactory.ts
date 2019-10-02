@@ -9,7 +9,7 @@ export default class ResourceFactory implements AvailabilityResourceInterface {
   public params: object;
   public promise: object;
   public store: Store<any>;
-  public state: any[string];
+  public state?: Store<any>;
 
   /**
    * Defines the resources
@@ -22,7 +22,20 @@ export default class ResourceFactory implements AvailabilityResourceInterface {
     this.params = params;
     this.promise = {};
     this.store = store;
-    this.state = store.state;
+  }
+
+  /**
+   * Set the name of the state key(index name)
+   *
+   * @param state Store<any>
+   * @returns {ResourceFactory}
+   */
+  public setState(state: Store<any>) {
+    if (state) {
+      this.state = state;
+    }
+
+    return this;
   }
 
   /**
@@ -30,14 +43,12 @@ export default class ResourceFactory implements AvailabilityResourceInterface {
    * if exists, uses state values as a promise
    *
    * @param adapter object instance of State Promise Adapter
-   * @param stateKey string property of vuex state object
-   *
    * @returns {ResourceFactory}
    */
-  public hasState(adapter: StatePromiseInterface, stateKey: string) {
-    if (this.state.availability[stateKey]) {
+  public hasState(adapter: StatePromiseInterface) {
+    if (this.state) {
       this.promise = adapter
-        .setState(this.state.availability[stateKey])
+        .setState(this.state)
         .transform();
     }
 
@@ -53,12 +64,13 @@ export default class ResourceFactory implements AvailabilityResourceInterface {
    * @returns {ResourceFactory}
    */
   public hasApi(resource: ApiResourceInterface, resourcePathName: string, apiParams: ResourceParameterInterface) {
-    this.promise = resource
-      .setParams(apiParams)
-      .setResourcePath(resourcePathName)
-      .setState(this.store)
-      .get();
-
+    if (!this.state) {
+      this.promise = resource
+        .setParams(apiParams)
+        .setResourcePath(resourcePathName)
+        .setState(this.store)
+        .get();
+    }
     return this;
   }
 
