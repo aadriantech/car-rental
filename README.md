@@ -7,6 +7,8 @@ The system will display the locations of all the available cars in clusters.
 
 The markers show the number of cars per location, users are also able to
  click the markers to display the route from the chosen marker to the first drop-off location.
+ 
+Best displayed on a mobile device.
 
 ## Project setup
 ```
