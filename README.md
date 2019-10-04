@@ -5,6 +5,11 @@
 npm install
 ```
 
+## Environment variable setup
+```
+VUE_APP_GOOGLE_MAPS_API_KEY=""
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
