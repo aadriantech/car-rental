@@ -14,7 +14,7 @@ const initPromise = new Promise((resolve, reject) => {
   rejectInitPromise = reject;
 });
 
-export default function init() {
+export default function init(): Promise<any> {
   // If Google Maps already is initialized
   // the `initPromise` should get resolved
   // eventually.

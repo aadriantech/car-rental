@@ -71,8 +71,8 @@
     <!-- START::Google Maps -->
     <v-row v-if="showMaps">
       <google-maps
+        :key="reRender"
         v-bind:availabilityData="availabilityData"
-        v-on:hideGoogleMaps="onHideGoogleMaps"
       ></google-maps>
     </v-row><!-- END::Google Maps -->
   </div>
@@ -97,6 +97,7 @@
     public showTimePicker: boolean = false;
     public startTime: string = '';
     public endTime: string = '';
+    public reRender: number = 1;
     public showMaps: boolean = false;
     public showSubmit: boolean = false;
     public type: string = '';
@@ -110,6 +111,7 @@
      * @return void
      */
     public async callAvailabilityApi() {
+      this.reRender += 1;
       const availabilityRepository = RepositoryFactory.get('availability');
       const {data} = await availabilityRepository.get(this.$store, this.startTime, this.endTime);
       this.availabilityData = data.data;
@@ -128,15 +130,6 @@
      */
     public checkValuesExist(show: boolean) {
       this.showSubmit = show;
-    }
-
-    /**
-     * Hides the google map after choosing a car pickup point
-     *
-     * @return void
-     */
-    public onHideGoogleMaps(show: boolean) {
-      this.showMaps = !show;
     }
 
     /**
