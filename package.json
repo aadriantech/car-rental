@@ -9,8 +9,12 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@google/maps": "^1.0.1",
+    "@google/markerclusterer": "^1.0.3",
+    "@types/markerclustererplus": "^2.1.33",
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
+    "markerclustererplus": "^2.1.4",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
@@ -29,6 +33,7 @@
     "@vue/cli-service": "^3.11.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
+    "google-maps-api-typings": "^1.0.5",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "ts-jest": "^23.0.0",

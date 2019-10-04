@@ -70,7 +70,10 @@
 
     <!-- START::Google Maps -->
     <v-row v-if="showMaps">
-      <google-maps v-bind:availabilityData="availabilityData"></google-maps>
+      <google-maps
+        v-bind:availabilityData="availabilityData"
+        v-on:hideGoogleMaps="onHideGoogleMaps"
+      ></google-maps>
     </v-row><!-- END::Google Maps -->
   </div>
 </template>
@@ -125,6 +128,15 @@
      */
     public checkValuesExist(show: boolean) {
       this.showSubmit = show;
+    }
+
+    /**
+     * Hides the google map after choosing a car pickup point
+     *
+     * @return void
+     */
+    public onHideGoogleMaps(show: boolean) {
+      this.showMaps = !show;
     }
 
     /**
