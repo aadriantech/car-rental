@@ -2,13 +2,16 @@
 
 Consumes the Smove availability API resource.
 
-Users are able to choose the start time and endtime.
+Users are able to choose the start time and end time.
 The system will display the locations of all the available cars in clusters.
 
 The markers show the number of cars per location, users are also able to
  click the markers to display the route from the chosen marker to the first drop-off location.
  
 Best displayed on a mobile device.
+
+The system is also capable of caching the data from the api resource. It will use the cache if user uses same start
+and end time.
 
 ## Project setup
 ```
