@@ -1,5 +1,13 @@
 # car-rental
 
+Consumes the Smove availability API resource.
+
+Users are able to choose the start time and endtime.
+The system will display the locations of all the available cars in clusters.
+
+The markers show the number of cars per location, users are also able to
+ click the markers to display the route from the chosen marker to the first drop-off location.
+
 ## Project setup
 ```
 npm install
