@@ -12,7 +12,7 @@
     "@google/maps": "^1.0.1",
     "@google/markerclusterer": "^1.0.3",
     "@types/google__maps": "^0.5.8",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "core-js": "^2.6.5",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
